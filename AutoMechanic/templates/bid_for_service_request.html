@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Bid for Service Request{% endblock %}
+
+{% block content %}
+<div class="container mx-auto mt-10">
+    <h1 class="text-3xl font-bold mb-6">Bid for Service Request: {{ service_request.title }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-4">
+            {{ form.amount.label_tag }}
+            {{ form.amount }}
+        </div>
+        <div class="mb-4">
+            {{ form.message.label_tag }}
+            {{ form.message }}
+        </div>
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit Bid</button>
+    </form>
+</div>
+{% endblock %}

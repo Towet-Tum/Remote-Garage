@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+{% load form_tags %}
+
+{% block title %}Post Service Request{% endblock %}
+
+{% block content %}
+<div class="container mx-auto mt-10 p-6 bg-white shadow-md rounded-lg" style="max-width: 60%;">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800">Post a Car Service Request</h1>
+    <form method="post" class="space-y-6">
+        {% csrf_token %}
+        <div class="mb-4">
+            <label for="{{ form.title.id_for_label }}" class="block text-gray-700 font-bold mb-2">{{ form.title.label_tag }}</label>
+            {{ form.title|add_class:"appearance-none border border-gray-300  w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline bg-transparent" }}
+        </div>
+        <div class="mb-4">
+            <label for="{{ form.description.id_for_label }}" class="block text-gray-700 font-bold mb-2">{{ form.description.label_tag }}</label>
+            {{ form.description|add_class:"appearance-none border border-gray-300  w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline bg-transparent" }}
+        </div>
+        <div class="mb-4">
+            <label for="{{ form.car_model.id_for_label }}" class="block text-gray-700 font-bold mb-2">{{ form.car_model.label_tag }}</label>
+            {{ form.car_model|add_class:"appearance-none border border-gray-300  w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline bg-transparent" }}
+        </div>
+        <div class="mb-4">
+            <label for="{{ form.service_type.id_for_label }}" class="block text-gray-700 font-bold mb-2">{{ form.service_type.label_tag }}</label>
+            {{ form.service_type|add_class:"appearance-none border border-gray-300  w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline bg-transparent" }}
+        </div>
+        <div class="flex justify-center mt-6">
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Mechanic List{% endblock %}
+
+{% block head %}
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY"></script>
+    <script>
+        function initMap() {
+            // Default to Nairobi coordinates if no mechanics are present
+            var defaultLat = -1.286389;
+            var defaultLng = 36.817223;
+            var latitudes = {{ latitudes|safe }};
+            var longitudes = {{ longitudes|safe }};
+            
+            var centerLat = defaultLat;
+            var centerLng = defaultLng;
+
+            if (latitudes.length > 0 && longitudes.length > 0) {
+                var sumLat = latitudes.reduce((a, b) => a + b, 0);
+                var sumLng = longitudes.reduce((a, b) => a + b, 0);
+                centerLat = sumLat / latitudes.length;
+                centerLng = sumLng / longitudes.length;
+            }
+
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12,
+                center: {lat: centerLat, lng: centerLng}
+            });
+
+            {% for mechanic in mechanics %}
+            var marker = new google.maps.Marker({
+                position: {lat: {{ mechanic.latitude }}, lng: {{ mechanic.longitude }}},
+                map: map,
+                title: '{{ mechanic.name }}'
+            });
+            {% endfor %}
+        }
+    </script>
+{% endblock %}
+
+{% block content %}
+    <h1>Mechanics</h1>
+    {% if closest_mechanic %}
+        <h2>Closest Mechanic: {{ closest_mechanic.name }} ({{ closest_distance }} km away)</h2>
+    {% endif %}
+    <div id="map" style="height: 500px; width: 100%;"></div>
+    <ul>
+        {% for mechanic in mechanics %}
+            <li>{{ mechanic.name }} - ({{ mechanic.latitude }}, {{ mechanic.longitude }})</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

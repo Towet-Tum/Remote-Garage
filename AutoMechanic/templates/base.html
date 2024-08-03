@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AutoMech{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY"></script>
+    <script src="{% static 'js/scripts.js' %}" defer></script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            
+        }
+
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: #1E3A8A;
+        }
+
+        .sticky-footer {
+            position: relative;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #1E3A8A;
+            color: #fff;
+            padding: 1rem 0;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <!-- Navbar -->
+    <nav id="navbar" class="sticky-nav bg-blue-600 p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-white text-2xl font-bold">AutoMech</h1>
+            <ul class="flex space-x-4">
+                <li><a href="{% url 'home' %}" class="text-white">Home</a></li>
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'service_request_list' %}" class="text-white">Requests</a></li>
+                    <li><a href="{% url 'car_owner_portal' %}" class="text-white">Portal</a></li>
+                    <li><a href="{% url 'logout' %}" class="text-white">Logout</a></li>
+                    
+                    l
+                {% else %}
+                    <li><a href="{% url 'register' %}" class="text-white">Register</a></li>
+                    <li><a href="{% url 'login' %}" class="text-white">Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container-fluid mx-auto my-0 px-0">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- 
+    <footer class="sticky-footer text-center">
+        <p>&copy; 2024 AutoMech. All rights reserved.</p>
+    </footer>
+     -->
+</body>
+
+</html>

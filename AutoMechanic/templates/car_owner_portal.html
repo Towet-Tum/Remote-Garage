@@ -1,0 +1,36 @@
+<!-- templates/car_owner_portal.html -->
+{% extends 'base.html' %}
+
+{% block title %}Car Owner Portal{% endblock %}
+
+{% block content %}
+<div class="container mx-auto mt-10">
+    <div class="bg-white p-6 rounded shadow">
+       
+        
+        <div class="flex items-center justify-between">
+            <h1 style="text-decoration: none; text-transform:capitalize; font-size:bold;">Hello, {{request.user.username}}</h1>
+            <h2 class="text-2xl font-bold mb-6">Your Service Requests</h2>
+            <button  class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"><a href="{% url 'post_service_request' %}" class="">Post</a></button>
+        </div>
+
+        {% if service_requests %}
+            <ul class="list-disc pl-5">
+                {% for request in service_requests %}
+                    <li class="mb-4">
+                        <div class="p-4 border border-gray-300 rounded">
+                            <h3 class="text-xl font-semibold">{{ request.title }}</h3>
+                            <p class="text-gray-700">{{ request.description }}</p>
+                            <a href="{% url 'select_bid' request.id %}" class="text-blue-500 hover:underline">
+                                View and Select Bids
+                            </a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No service requests found.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

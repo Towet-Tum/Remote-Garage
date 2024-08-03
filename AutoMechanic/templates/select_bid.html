@@ -1,0 +1,30 @@
+<!-- templates/select_bid.html -->
+{% extends 'base.html' %}
+
+{% block title %}Select Bid{% endblock %}
+
+{% block content %}
+<div class="container mx-auto mt-10">
+    <div class="bg-white p-6 rounded shadow">
+        <h2 class="text-2xl font-bold mb-6">Select a Bid for "{{ service_request.title }}"</h2>
+
+        {% if bids %}
+            <form method="POST" action="{% url 'select_bid' service_request.id %}">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label for="bid_id" class="block text-gray-700">Select a bid:</label>
+                    <select name="bid_id" id="bid_id" class="w-full p-2 border border-gray-300 rounded mt-1">
+                        <option value="">-- Choose a bid --</option>
+                        {% for bid in bids %}
+                            <option value="{{ bid.id }}">{{ bid.mechanic.username }} - ${{ bid.amount }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="bg-blue-500 text-white p-2 rounded">Select Bid</button>
+            </form>
+        {% else %}
+            <p>No bids available for this service request.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Service Request Detail{% endblock %}
+
+{% block content %}
+<div class="container mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800">{{ service_request.title }}</h1>
+    <div class="mb-4">
+        <h2 class="text-xl font-bold mb-2 text-gray-700">Description</h2>
+        <p class="text-gray-700">{{ service_request.description }}</p>
+    </div>
+    <div class="mb-4">
+        <h2 class="text-xl font-bold mb-2 text-gray-700">Car Model</h2>
+        <p class="text-gray-700">{{ service_request.car_model }}</p>
+    </div>
+    <div class="mb-4">
+        <h2 class="text-xl font-bold mb-2 text-gray-700">Service Type</h2>
+        <p class="text-gray-700">{{ service_request.service_type }}</p>
+    </div>
+</div>
+{% endblock %}

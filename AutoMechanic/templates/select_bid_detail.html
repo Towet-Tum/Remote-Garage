@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Service Request Details{% endblock %}
+
+{% block content %}
+<div class="container mx-auto mt-10">
+    <h1 class="text-3xl font-bold mb-6">{{ service_request.title }}</h1>
+
+    <p class="mb-4"><strong>Description:</strong> {{ service_request.description }}</p>
+    <p class="mb-4"><strong>Status:</strong> {{ service_request.status }}</p>
+
+    <h2 class="text-2xl font-bold mb-4">Bids</h2>
+
+    {% if bids %}
+    <form method="POST" action="{% url 'select_bid' id=service_request.id %}">
+        {% csrf_token %}
+        <table class="min-w-full bg-white border border-gray-300 rounded">
+            <thead>
+                <tr class="w-full bg-gray-200 border-b border-gray-300">
+                    <th class="py-2 px-4 text-left">Mechanic</th>
+                    <th class="py-2 px-4 text-left">Bid Amount</th>
+                    <th class="py-2 px-4 text-left">Select</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for bid in bids %}
+                <tr>
+                    <td class="py-2 px-4 border-b">{{ bid.mechanic.username }}</td>
+                    <td class="py-2 px-4 border-b">{{ bid.amount }}</td>
+                    <td class="py-2 px-4 border-b">
+                        <input type="radio" name="bid_id" value="{{ bid.id }}" id="bid_{{ bid.id }}" class="mr-2">
+                        <label for="bid_{{ bid.id }}">Select</label>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="mt-4">
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+        </div>
+    </form>
+    {% else %}
+    <p class="text-gray-700">No bids available for this service request.</p>
+    {% endif %}
+</div>
+{% endblock %}
